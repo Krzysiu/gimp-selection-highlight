@@ -13,14 +13,14 @@ def multiply_canvas_size(image, drawable, in_width, in_height, in_guides):
         in_height = int(in_height)
         
         pdb.gimp_image_resize(image, image.width*in_width, image.height*in_height, 0, 0)
-        
-        if in_width > 1:
-            for x in range(1, in_width):
-                pdb.gimp_image_add_vguide(image, x*old_width)
-            
-        if in_height > 1:
-            for x in range(1, in_height):
-                pdb.gimp_image_add_hguide(image, x*old_height)
+        if in_guides:
+            if in_width > 1:
+                for x in range(1, in_width):
+                    pdb.gimp_image_add_vguide(image, x*old_width)
+                
+            if in_height > 1:
+                for x in range(1, in_height):
+                    pdb.gimp_image_add_hguide(image, x*old_height)
                 
         image.undo_group_end()
         gimp.displays_flush()
