@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 from gimpfu import *
 import os
@@ -100,7 +101,7 @@ register(
         (PF_TOGGLE, "in_set_default", "Set this file as default:", 0),
         (PF_SPINNER, "in_watermark_width", "Watermark width (% of image):", 20, (1, 100, 1)),
         (PF_SPINNER, "in_watermark_margin", "Margin (% of image):", 1, (0, 50, 1)),
-        (PF_OPTION, "in_placement", "Position:", 3, ["Top left","Top right","Bottom left","Bottom right"]),
+        (PF_OPTION, "in_placement", "Position:", 3, ["[▀  ]Top left","[  ▀] Top right","[▄  ] Bottom left","[  ▄] Bottom right"]),
         (PF_SPINNER, "in_opacity", "Opacity (%):", 60, (0, 100, 1)),
         (PF_TOGGLE, "in_invert", "Invert colors:", 0)
     ], 
