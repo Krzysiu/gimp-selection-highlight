@@ -3,10 +3,12 @@
 
 from gimpfu import *
 import os
+import gimpcolor
 import gtk
+import colorsys 
 
 def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_watermark_width, in_watermark_margin, in_placement, in_opacity, in_invert):
-    
+
     if os.path.isfile(in_file_name)==False:
         kgpp_msgbox("The watermark file doesn't exist", "Following file doesn't exist:\n<tt>%s</tt>" % (in_file_name), gtk.MESSAGE_ERROR)
         return
@@ -19,7 +21,7 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
         fh.write(in_file_name)
         fh.close() 
         
-
+    
     gimp.context_push()
     image.undo_group_start()
     
@@ -51,11 +53,30 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
         water_space_x = drawable.width - (img_space_x + water.width)
         water_space_y = drawable.height - (img_space_y + water.height)
         
+    if in_invert==1:
+        pdb.gimp_invert(water)
+    if in_invert==2:
+        total_color = [0, 0, 0]    
+        watermark_size = water.width*water.height
+        step = max(1, int(water.width * 0.02)) # probe size - values below 0.01 may be very slow
+        total_pixels = 0
+
+        for x in range(water_space_x, water_space_x+water.width, step):
+            for y in range(water_space_y, water_space_y+water.height, step):
+                chan, color = pdb.gimp_drawable_get_pixel(drawable, x, y) # get pixel color
+                total_color[0] += color[0]
+                total_color[1] += color[1]
+                total_color[2] += color[2]
+                total_pixels += 1
+
+
+        average_color = tuple(c / total_pixels for c in total_color) #count average RGB
+        h, l, s = colorsys.rgb_to_hls(*average_color)
+        if l<120:
+            pdb.gimp_invert(water)
+
     pdb.gimp_layer_set_offsets(water, water_space_x, water_space_y)
 
-    if in_invert:
-        pdb.gimp_invert(water)
-    
     image.undo_group_end()
     gimp.displays_flush()
     gimp.context_pop()
@@ -103,7 +124,7 @@ register(
         (PF_SPINNER, "in_watermark_margin", "Margin (% of image):", 1, (0, 50, 1)),
         (PF_OPTION, "in_placement", "Position:", 3, ["[▀  ]Top left","[  ▀] Top right","[▄  ] Bottom left","[  ▄] Bottom right"]),
         (PF_SPINNER, "in_opacity", "Opacity (%):", 60, (0, 100, 1)),
-        (PF_TOGGLE, "in_invert", "Invert colors:", 0)
+        (PF_OPTION, "in_invert", "Watermark color:", 0, ["Black", "White", "Auto"])
     ], 
     [],
     watermark_from_svg,
