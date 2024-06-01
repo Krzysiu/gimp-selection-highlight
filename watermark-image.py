@@ -7,7 +7,7 @@ import gimpcolor
 import gtk
 import colorsys 
 
-def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_watermark_width, in_watermark_margin, in_placement, in_opacity, in_invert):
+def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_watermark_width, in_watermark_margin, in_placement, in_mode, in_opacity, in_invert):
 
     if os.path.isfile(in_file_name)==False:
         kgpp_msgbox("The watermark file doesn't exist", "Following file doesn't exist:\n<tt>%s</tt>" % (in_file_name), gtk.MESSAGE_ERROR)
@@ -30,6 +30,15 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
 
     pdb.gimp_item_set_name(water, "SVG watermark")
     pdb.gimp_layer_set_opacity(water, in_opacity)
+    
+    # Hackish mode mapping
+    mapped_mode = 28 # default mode (normal=28)
+    if in_mode>0:
+        mapped_mode = in_mode + 22 # +22 for every, but first (0) mode
+        if in_mode>5:
+            mapped_mode += 1 # +1 more (+23) for modes over 5 (as normal is 28)
+
+    pdb.gimp_layer_set_mode(water, mapped_mode)
     
     pdb.gimp_context_set_interpolation(INTERPOLATION_LANCZOS)
     water_new_width = int(drawable.width * (in_watermark_width / 100))
@@ -123,6 +132,7 @@ register(
         (PF_SPINNER, "in_watermark_width", "Watermark width (% of image):", 20, (1, 100, 1)),
         (PF_SPINNER, "in_watermark_margin", "Margin (% of image):", 1, (0, 50, 1)),
         (PF_OPTION, "in_placement", "Position:", 3, ["[▀  ]Top left","[  ▀] Top right","[▄  ] Bottom left","[  ▄] Bottom right"]),
+        (PF_OPTION, "in_mode", "Blending mode:", 0, ["Normal", "Overlay", "LCH hue", "LCH chroma", "LCH color", "LCH lightness", "Behind", "Multiply", "Screen", "Difference", "Addition", "Subtract", "Darken only", "Lighten only", "HSV hue", "HSV saturation", "HSL color", "HSV value", "Divide", "Dodge", "Burn", "Hardlight", "Softlight", "Grain extract", "Grain merge", "Vivid light", "Pin light", "Linear light", "Hard mix", "Exclusion", "Linear burn", "Luma darken only", "Luma lighten only", "Luminance", "Color erase", "Erase", "Merge", "Split"]),
         (PF_SPINNER, "in_opacity", "Opacity (%):", 60, (0, 100, 1)),
         (PF_OPTION, "in_invert", "Watermark color:", 0, ["Black", "White", "Auto"])
     ], 
