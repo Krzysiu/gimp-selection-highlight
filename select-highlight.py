@@ -2,10 +2,11 @@
 
 from gimpfu import *
 
-def highlight_selection(image, drawable, in_bg_color, in_bg_opacity, in_border_color, in_border_opacity, in_border_size, in_border_radius, in_border_type) :
+def highlight_selection(image, drawable, in_bg_color, in_copy_color, in_bg_opacity, in_border_color, in_border_opacity, in_border_size, in_border_radius, in_border_type) :
     gimp.context_push()
     image.undo_group_start()
-    
+    if in_copy_color:
+         in_border_color = in_bg_color
     layer = pdb.gimp_layer_new(image, image.width, image.height, RGBA_IMAGE, "Hightlight plugin workspace", 100, NORMAL_MODE)
     pdb.gimp_image_insert_layer(image, layer, None, -1)
     
@@ -48,6 +49,7 @@ register(
     "*", 
     [
         (PF_COLOR, "in_bg_color", "Color of background:", (255, 0, 0)),
+        (PF_TOGGLE, "in_copy_color", "Use background color for border", 0),
         (PF_SLIDER, "in_bg_opacity", "Opacity of background (%; 0=off):", 10, (0, 100, 1)),
         (PF_COLOR, "in_border_color", "Border color:", (255, 0, 0)),
         (PF_SLIDER, "in_border_opacity", "Opacity of border (%; 0=off):", 90, (0, 100, 1)),
