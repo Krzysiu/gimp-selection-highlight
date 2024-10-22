@@ -132,8 +132,8 @@ register(
         (PF_SPINNER, "in_watermark_width", "Watermark width (% of image):", 20, (1, 100, 1)),
         (PF_SPINNER, "in_watermark_margin", "Margin (% of image):", 1, (0, 50, 1)),
         (PF_OPTION, "in_placement", "Position:", 3, ["[▀  ]Top left","[  ▀] Top right","[▄  ] Bottom left","[  ▄] Bottom right"]),
-        (PF_OPTION, "in_mode", "Blending mode:", 0, ["Normal", "Overlay", "LCH hue", "LCH chroma", "LCH color", "LCH lightness", "Behind", "Multiply", "Screen", "Difference", "Addition", "Subtract", "Darken only", "Lighten only", "HSV hue", "HSV saturation", "HSL color", "HSV value", "Divide", "Dodge", "Burn", "Hardlight", "Softlight", "Grain extract", "Grain merge", "Vivid light", "Pin light", "Linear light", "Hard mix", "Exclusion", "Linear burn", "Luma darken only", "Luma lighten only", "Luminance", "Color erase", "Erase", "Merge", "Split"]),
-        (PF_SPINNER, "in_opacity", "Opacity (%):", 60, (0, 100, 1)),
+        (PF_OPTION, "in_mode", "Blending mode:", 1, ["Normal", "Overlay", "LCH hue", "LCH chroma", "LCH color", "LCH lightness", "Behind", "Multiply", "Screen", "Difference", "Addition", "Subtract", "Darken only", "Lighten only", "HSV hue", "HSV saturation", "HSL color", "HSV value", "Divide", "Dodge", "Burn", "Hardlight", "Softlight", "Grain extract", "Grain merge", "Vivid light", "Pin light", "Linear light", "Hard mix", "Exclusion", "Linear burn", "Luma darken only", "Luma lighten only", "Luminance", "Color erase", "Erase", "Merge", "Split"]),
+        (PF_SPINNER, "in_opacity", "Opacity (%):", 100, (0, 100, 1)),
         (PF_OPTION, "in_invert", "Watermark color:", 0, ["Black", "White", "Auto"])
     ], 
     [],
