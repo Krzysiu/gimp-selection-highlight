@@ -14,22 +14,44 @@ For the installation, requiments, list of plugins with description, usage and ex
 + [Multiply canvas size](https://github.com/Krzysiu/krzysiu-gimp-plugin-pack/wiki/Multiply-canvas-size) <sub>`multiply-canvas-size.py`</sub> - multiplies canvas size (e.g. width x2, height x3) and optionally adds guide lines
 
 ## Changelog
-### 14.01.2019
-+ Added new plugin: **Multiply canvas size**
+### Icons:
++ :beetle: bug fix
++ :hatching_chick: new plugin
++ :arrow_down: minor change
++ :arrow_up: major change
 
-### 13.09.2018
-+ Added new plugin: **Bounce animation**
-+ Removed debug procedures from **Watermark file with SVG**
+### 22 October 2024
++ :arrow_up: **Highlight selection** simplify process: ability to reuse background color as border
++ :arrow_down: **Watermark image** set default mode to overlay and opacity 100 (much better for watermarking than previous normal/60)
++ :arrow_down: clean up change log
++ :arrow_down: added asset with current version 
 
-### 03.05.2018
-+ Added new plugin: **SVG to multisize icon**
+### 1 Jun 2024
++ :arrow_up: **Watermark image** ability to set blending mode (try overlay!)
 
-### 05.04.2018
-+ Added new plugin: **Watermark file with SVG**
+### 15 March 2024
++ :arrow_up: **Watermark image** beta feature: automatically set watermark color (white/black)
 
-### 20.03.2016
-+ Added new plugin: **Animate hue**
+### 9 March 2024
++ :arrow_down: **Watermark image** cosmetic changes for people suffering left-right confusion
++ :beetle: **Multiply canvas size** not obeying guide line settings
 
-### 10.12.2015
-+ Added two new plugins: **Dreamy picture** and **Add number layers**
-+ Fixed bug in Render cloudy background
+### 14 January 2019
++ :hatching_chick: **Multiply canvas size**
+
+### 13 September 2018
++ :hatching_chick: **Bounce animation**
++ :arrow_down: removed debug procedures from **Watermark file with SVG**
+
+### 03 May 2018
++ :hatching_chick: **SVG to multisize icon**
+
+### 05 April 2018
++ :hatching_chick: **Watermark file with SVG**
+
+### 20 March 2016
++ :hatching_chick: **Animate hue**
+
+### 10 December 2015
++ :hatching_chick: :hatching_chick: **Dreamy picture** and **Add number layers**
++ :arrow_down: fixed bug in Render cloudy background
