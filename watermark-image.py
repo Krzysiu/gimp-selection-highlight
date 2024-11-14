@@ -24,7 +24,12 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
     
     gimp.context_push()
     image.undo_group_start()
-    
+    light_loaded = False
+    base_name, ext = os.path.splitext(in_file_name)
+    light_file_name = base_name + "-light" + ext
+    if os.path.isfile(light_file_name):
+        in_file_name = light_file_name
+        light_loaded = True
     water = pdb.gimp_file_load_layer(image, in_file_name)
     pdb.gimp_image_insert_layer(image, water, None, -1)
 
@@ -63,7 +68,7 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
         water_space_y = drawable.height - (img_space_y + water.height)
         
     if in_invert==1:
-        pdb.gimp_invert(water)
+        kpgp_inverColors(water, light_loaded)
     if in_invert==2:
         total_color = [0, 0, 0]    
         watermark_size = water.width*water.height
@@ -82,7 +87,7 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
         average_color = tuple(c / total_pixels for c in total_color) #count average RGB
         h, l, s = colorsys.rgb_to_hls(*average_color)
         if l<120:
-            pdb.gimp_invert(water)
+            kpgp_inverColors(water, light_loaded)
 
     pdb.gimp_layer_set_offsets(water, water_space_x, water_space_y)
 
@@ -91,7 +96,13 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
     gimp.context_pop()
 
     return
-
+    
+def kpgp_inverColors(drawable, loaded):
+    if not loaded: # use invert as fallback, if there's no _light version
+        pdb.gimp_invert(drawable)
+    return
+    
+    
 def kgpp_msgbox(msg1, msg2, type):
     msgbox = gtk.MessageDialog(
         None, 
@@ -134,7 +145,7 @@ register(
         (PF_OPTION, "in_placement", "Position:", 3, ["[▀  ]Top left","[  ▀] Top right","[▄  ] Bottom left","[  ▄] Bottom right"]),
         (PF_OPTION, "in_mode", "Blending mode:", 1, ["Normal", "Overlay", "LCH hue", "LCH chroma", "LCH color", "LCH lightness", "Behind", "Multiply", "Screen", "Difference", "Addition", "Subtract", "Darken only", "Lighten only", "HSV hue", "HSV saturation", "HSL color", "HSV value", "Divide", "Dodge", "Burn", "Hardlight", "Softlight", "Grain extract", "Grain merge", "Vivid light", "Pin light", "Linear light", "Hard mix", "Exclusion", "Linear burn", "Luma darken only", "Luma lighten only", "Luminance", "Color erase", "Erase", "Merge", "Split"]),
         (PF_SPINNER, "in_opacity", "Opacity (%):", 100, (0, 100, 1)),
-        (PF_OPTION, "in_invert", "Watermark color:", 0, ["Black", "White", "Auto"])
+        (PF_OPTION, "in_invert", "Watermark color:", 0, ["Dark", "Light", "Auto"])
     ], 
     [],
     watermark_from_svg,

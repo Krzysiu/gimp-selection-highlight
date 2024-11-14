@@ -20,6 +20,10 @@ For the installation, requiments, list of plugins with description, usage and ex
 + :arrow_down: minor change
 + :arrow_up: major change
 
+### 14 November 2024
++ :arrow_up: **Watermark image** ability to use light version (earlier: simply invert colors of the original file) - see [wiki entry for Watermark file with SVG](https://github.com/Krzysiu/krzysiu-gimp-plugin-pack/wiki/Watermark-file-with-SVG) for details and example
++ :arrow_down: **Watermark image** because the new feature, white and black renamed to light and dark
+
 ### 22 October 2024
 + :arrow_up: **Highlight selection** simplify process: ability to reuse background color as border
 + :arrow_down: **Watermark image** set default mode to overlay and opacity 100 (much better for watermarking than previous normal/60)
