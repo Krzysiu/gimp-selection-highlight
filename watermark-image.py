@@ -27,7 +27,7 @@ def watermark_from_svg(image, drawable, in_file_name, in_set_default, in_waterma
     light_loaded = False
     base_name, ext = os.path.splitext(in_file_name)
     light_file_name = base_name + "-light" + ext
-    if os.path.isfile(light_file_name):
+    if os.path.isfile(light_file_name) and in_invert:
         in_file_name = light_file_name
         light_loaded = True
     water = pdb.gimp_file_load_layer(image, in_file_name)
